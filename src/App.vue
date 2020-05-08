@@ -11,10 +11,10 @@
       </div>
       <hr class="bg-info">
       <div class="alert alert-success" v-if="successMsg">
-        <span>Done !</span>
+        <span>{{ successMsg }}</span>
       </div>
       <div class="alert alert-danger" v-if="errorMsg">
-        <span>Something went wrong !</span>
+        <span>{{ errorMsg }}</span>
       </div>
       <div class="row">
         <div class="col-lg-12">
@@ -33,7 +33,7 @@
 	            <tbody>
 	            	<tr v-for="(book, index) in books" class="text-center">
 	            		<td> {{ book.id }} </td>
-	            		<td> {{ book.name }} </td>
+	            		<td><a href="#"> {{ book.name }} </a></td>
 	            		<td> {{ book.author }} </td>
 	            		<td> {{ book.price}} </td>
 	            		<td>
@@ -148,18 +148,19 @@ export default {
       showAddModal: false,
       showEditModal: false,
       showDeleteModal: false,
-      books: [
-      	{id:1,name:"Harry Potter",author: "Moi",price:100},
-      	{id:2,name:"The great gastby",author: "Scott Fitzgerald",price:500},
-      	{id:3,name:"To Kill a Mockingbird",author: "Harper Lee",price:240}
-      ]
+      books: [],
+      newBook: {name: "", author: "", price: ""},
+      currentBook: {}
     }
   },
+  mounted: function(){
+    this.getAllBooks();
+  },
   methods: {
-  	 deleteBook: function(index) {
-	  	this.books.splice(index, 1);
-	  	this.showDeleteModal = false;
-	}
+      getAllBooks(){
+        axios.get('http://localhost/crud-vuejs/src/Backend/api.php?action=read')
+       .then(res => console.log(res))
+      }
   }
 }
 
@@ -174,4 +175,12 @@ export default {
 		right: 0;
 		background-color: rgba(0,0,0,0.6);
 	}
+  td a{
+    color: #000;
+    text-decoration: none;
+  }
+  td a:hover{
+    color: #dd0c29;
+    text-decoration: none;
+  }
 </style>
