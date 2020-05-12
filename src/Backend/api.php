@@ -1,4 +1,9 @@
 <?php
+
+	header('Access-Control-Allow-Origin: *');
+	header('Access-Control-Allow-Methods: GET, POST');
+	header("Access-Control-Allow-Headers: X-Requested-With");
+
 	$server= "localhost";
 	$user= "root";
 	$password= "";
@@ -22,12 +27,12 @@
 
 	// FETCHING DATA FROM THE DB
 	if($action == "read"){
-		$sql = $conn->query("SELECT * FROM book");
+		$sql = $conn->query("SELECT * FROM books");
 		$book = array();
 		while ($row = $sql->fetch_assoc()) {
 			array_push($book, $row);
 		}
-		$result['book'] = $book;
+		$result['books'] = $book;
 	}
 
 
@@ -38,14 +43,14 @@
 		$author = $_POST['author'];
 		$price = $_POST['price'];
 
-		$sql = $conn->query("INSERT INTO book (name,author,price) VALUES('$name','$author','$price')");
+		$sql = $conn->query("INSERT INTO books (name,author,price) VALUES('$name','$author','$price')");
 
 		if($sql){
 			$result['message'] = "Book was added successfully!";
 		}
 		else{
 			$result['error'] = true;
-			$result['message'] = "Cannot add book!";
+			$result['message'] = "Cannot add book! Maybe it's already exist";
 		}
 	}
 
@@ -58,7 +63,7 @@
 		$author = $_POST['author'];
 		$price = $_POST['price'];
 
-		$sql = $conn->query("UPDATE book SET name='$name',author='$author',price='$price' WHERE id='$id'");
+		$sql = $conn->query("UPDATE books SET name='$name',author='$author',price='$price' WHERE id='$id'");
 
 		if($sql){
 			$result['message'] = "Book was updated successfully!";
@@ -75,7 +80,7 @@
 	if($action == "delete"){
 		$id = $_POST['id'];
 
-		$sql = $conn->query("DELETE FROM book WHERE id='$id'");
+		$sql = $conn->query("DELETE FROM books WHERE id='$id'");
 
 		if($sql){
 			$result['message'] = "Book was deleted successfully!";
@@ -87,6 +92,6 @@
 	}
 
 
-	$conn->close();
 	echo json_encode($result);
+	$conn->close();
 ?>

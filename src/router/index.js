@@ -4,6 +4,16 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
 const routes = [
+	{
+		path: "/book",
+		name: "book",
+		component: Book
+	},
+	{
+		path: "/author",
+		name: "author",
+		component: Author
+	}
 ];
 
 const router = new VueRouter({
