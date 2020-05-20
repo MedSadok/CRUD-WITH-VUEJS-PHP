@@ -1,18 +1,21 @@
 <template>
   <div class="text-center">
-    <h1 class="text-light text-center bg-dark py-3">{{ bookName }}</h1>
-    <h2>{{ bookAuthor }}</h2>
+    <h1 class="text-light text-center bg-dark py-3">{{ bookTitle }}</h1>
+    <p>LorAute est velit quis exercitation.Voluptate in nisi commodo aute.Nulla sint ut nostrud deserunt.
+      Ad et qui amet nulla culpa ex sunt culpa magna consequat quis fugiat aliqua dolore. Elit ex duis laborum veniam sunt do.
+      Aliqua mollit fugiat duis non qui elit nulla non occaecat ad reprehenderit.Anim irure nulla reprehenderit nulla officia reprehenderit voluptate excepteur.Culpa exercitation adipisicing cillum ipsum dolor.
+      Minim mollit dolor exercitation ex incididunt.Sit ad duis laborum dolore sit commodo voluptate laboris ullamco consequat.
+    </p>
     <hr class="bg-info">
-    <p>Irure laboris voluptate dolor officia mollit dolore aute qui tempor qui ut consectetur consequat pariatur laborum irure cupidatat minim officia non do do nulla dolore mollit nisi laboris qui officia sunt anim id veniam cupidatat et reprehenderit anim.</p>
+    <span>{{ bookAuthor }}</span>
   </div>
 </template>
 <script>
 export default {
-  name: "book",
   data: function() {
     return {
       id: this.$route.params.id,
-      bookName: '',
+      bookTitle: '',
       bookAuthor: ''
     }
   },
@@ -21,13 +24,14 @@ export default {
   },
   methods: {
     getBook() {
-      axios.get('http://localhost/crud-vuejs/src/Backend/api.php?action=read')
+      axios.get('http://localhost/VUEJS/src/Backend/api.php?action=read')
         .then((res) => {
           if (res.data.error) {
             this.errorMsg = res.data.message;
           } else {
-            this.bookName = res.data.books[this.id].name;
-            this.bookAuthor = res.data.books[this.id].author;
+            // this.bookTitle = res.data.books[this.id].Title;
+            this.bookTitle = res.data.books.filter(book => book.id === this.id)[0].Title;
+            this.bookAuthor = res.data.books.filter(book => book.id === this.id)[0].Author;
           }
         });
     }

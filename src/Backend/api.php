@@ -39,11 +39,11 @@
 
 	// ADDING DATA TO THE DB
 	if($action == "create"){
-		$name = $_POST['name'];
-		$author = $_POST['author'];
-		$price = $_POST['price'];
+		$Title = $_POST['Title'];
+		$Author = $_POST['Author'];
+		$Price = $_POST['Price'];
 
-		$sql = $conn->query("INSERT INTO books (name,author,price) VALUES('$name','$author','$price')");
+		$sql = $conn->query("INSERT INTO books (Title,Author,Price) VALUES('$Title','$Author','$Price')");
 
 		if($sql){
 			$result['message'] = "Book was added successfully!";
@@ -59,11 +59,11 @@
 	// UPDATING DATA
 	if($action == "update"){
 		$id = $_POST['id'];
-		$name = $_POST['name'];
-		$author = $_POST['author'];
-		$price = $_POST['price'];
+		$Title = $_POST['Title'];
+		$Author = $_POST['Author'];
+		$Price = $_POST['Price'];
 
-		$sql = $conn->query("UPDATE books SET name='$name',author='$author',price='$price' WHERE id='$id'");
+		$sql = $conn->query("UPDATE books SET Title='$Title',Author='$Author',Price='$Price' WHERE id='$id'");
 
 		if($sql){
 			$result['message'] = "Book was updated successfully!";

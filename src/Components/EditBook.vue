@@ -23,7 +23,7 @@
               <thead>
                 <tr class="text-center text-light text-info bg-primary">
                   <th class="d-table-cell">ID</th>
-                  <th>Name</th>
+                  <th>Title</th>
                   <th>Author</th>
                   <th>Price</th>
                   <th>Edit</th>
@@ -31,13 +31,11 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="book in books" class="text-center">
+                <tr v-for="book in books" :key="book.id" class="text-center">
                   <td> {{ book.id }} </td>
-                  <td>
-                    <router-link :to="{ name: 'book', params: { id : book.id - 1 }}"> {{ book.name }} </router-link>
-                  </td>
-                  <td> {{ book.author }} </td>
-                  <td> {{ book.price}} </td>
+                  <td> {{ book.Title }} </td>
+                  <td> {{ book.Author }} </td>
+                  <td> {{ book.Price}} </td>
                   <td>
                     <a href="#" class="text-success" @click="showEditModal=true; selectBook(book);">
                       <i class="fas fa-edit"></i>
@@ -68,16 +66,16 @@
           <div class="modal-body p-4">
             <form method="post" action="#">
               <div class="form-group">
-                <span>Name :</span>
-                <input type="text" name="name" class="form-control mt-2" placeholder="name" v-model="newBook.name">
+                <span>Title :</span>
+                <input type="text" name="title" class="form-control mt-2" placeholder="name" v-model="newBook.Title">
               </div>
               <div class="form-group">
                 <span>Author :</span>
-                <input type="text" name="author" class="form-control mt-2" placeholder="author" v-model="newBook.author">
+                <input type="text" name="author" class="form-control mt-2" placeholder="author" v-model="newBook.Author">
               </div>
               <div class="form-group">
                 <span>Price :</span>
-                <input type="text" name="price" class="form-control mt-2" placeholder="price" v-model="newBook.price">
+                <input type="text" name="price" class="form-control mt-2" placeholder="price" v-model="newBook.Price">
               </div>
               <button class="btn btn-info btn-block" @click.prevent="showAddModal=false; addBook();">ADD</button>
             </form>
@@ -98,16 +96,16 @@
           <div class="modal-body p-4">
             <form method="post" action="#">
               <div class="form-group">
-                <span>Name :</span>
-                <input type="text" name="name" class="form-control mt-2" v-model="currentBook.name">
+                <span>Title :</span>
+                <input type="text" name="title" class="form-control mt-2" v-model="currentBook.Title">
               </div>
               <div class="form-group">
                 <span>Author :</span>
-                <input type="text" name="author" class="form-control mt-2" v-model="currentBook.author">
+                <input type="text" name="author" class="form-control mt-2" v-model="currentBook.Author">
               </div>
               <div class="form-group">
                 <span>Price :</span>
-                <input type="text" name="price" class="form-control mt-2" v-model="currentBook.price">
+                <input type="text" name="price" class="form-control mt-2" v-model="currentBook.Price">
               </div>
               <div class="form-group">
                 <button class="btn btn-info btn-block" @click.prevent="showEditModal=false; editBook();">EDIT</button>
@@ -150,7 +148,7 @@ export default {
       showEditModal: false,
       showDeleteModal: false,
       books: [],
-      newBook: { name: "", author: "", price: "" },
+      newBook: { Title: "", Author: "", Price: "" },
       currentBook: {}
     }
   },
@@ -159,7 +157,7 @@ export default {
   },
   methods: {
     getAllBooks() {
-      axios.get('http://localhost/crud-vuejs/src/Backend/api.php?action=read')
+      axios.get('http://localhost/VUEJS/src/Backend/api.php?action=read')
         .then((res) => {
           if (res.data.error) {
             this.errorMsg = res.data.message;
@@ -170,9 +168,9 @@ export default {
     },
     addBook() {
       var formData = this.toFormData(this.newBook);
-      axios.post('http://localhost/crud-vuejs/src/Backend/api.php?action=create', formData)
+      axios.post('http://localhost/VUEJS/src/Backend/api.php?action=create', formData)
         .then((res) => {
-          this.newBook = { name: "", author: "", price: "" };
+          this.newBook = { Title: "", Author: "", Price: "" };
           if (res.data.error) {
             this.errorMsg = res.data.message;
           } else {
@@ -183,7 +181,7 @@ export default {
     },
     editBook() {
       var formData = this.toFormData(this.currentBook);
-      axios.post('http://localhost/crud-vuejs/src/Backend/api.php?action=update', formData)
+      axios.post('http://localhost/VUEJS/src/Backend/api.php?action=update', formData)
         .then((res) => {
           this.currentBook = {};
           if (res.data.error) {
@@ -196,7 +194,7 @@ export default {
     },
     deleteBook() {
       var formData = this.toFormData(this.currentBook);
-      axios.post('http://localhost/crud-vuejs/src/Backend/api.php?action=delete', formData)
+      axios.post('http://localhost/VUEJS/src/Backend/api.php?action=delete', formData)
         .then((res) => {
           this.currentBook = {};
           if (res.data.error) {

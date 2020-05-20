@@ -1,33 +1,52 @@
 <template>
   <div id="app">
-    <ul class="d-flex">
-      <li>
-        <router-link to="/">Edit Books</router-link>
-      </li>
-      <li>
-        <router-link to="/books">Book List</router-link>
-      </li>
-    </ul>
+    <header class="container-fluid">
+        <div class="d-flex justify-content-between py-4">
+          <router-link to="/">
+            <img :src="require('./assets/books.jpg')" alt="" />
+          </router-link>
+          <ul class="d-flex">     
+            <li>
+              <router-link to="/">Book List</router-link>
+            </li>
+            <li>
+              <router-link to="/edit-books">Edit Books</router-link>
+            </li>
+          </ul> 
+        </div>
+    </header>
     <router-view></router-view>
   </div>
 </template>
 <script>
-  import Homepage from "./Components/Homepage";
+  import EditBook from "./Components/EditBook";
   import Books from "./Components/Books";
-  import Book from "./Components/Book";
   export default {
     name: "App",
     
     components: {
-      Homepage,
-      Books,
-      Book
+      EditBook,
+      Books
     }
   }
 
 </script>
 
+
+<style scoped>
+  img{
+    width: 70px;
+  }
+</style>
+
 <style>
+  header{
+    box-shadow: 4px 8px 12px 0 rgba(0,0,0,0.3);
+  }
+  ul{
+    margin: 1rem 0;
+    padding: 0;
+  }
   li{
     list-style: none;
     margin-right: 24px;
