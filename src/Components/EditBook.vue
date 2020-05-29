@@ -4,10 +4,16 @@
     <div class="container-fluid">
       <div class="d-flex justify-content-between">
         <h2 class="text-info">Books</h2>
-        <button class="btn btn-info" @click="showAddModal=true">
-          <i class="fas fa-user mr-2"></i>
-          <span>add book</span>
-        </button>
+        <div class="d-flex">
+          <button class="btn btn-info mr-2" @click="showAddModal=true">
+            <i class="fas fa-user mr-2"></i>
+            <span>add book</span>
+          </button>
+          <button class="btn btn-success" @click="exportPDF">
+            <i class="fas fa-file-pdf mr-2"></i>
+            <span>Download book as PDF</span>
+          </button>
+        </div>
       </div>
       <hr class="bg-info">
       <div class="alert alert-success" v-if="successMsg">
@@ -138,6 +144,8 @@
   </div>
 </template>
 <script>
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 export default {
   name: "Homepage",
   data: function() {
@@ -154,6 +162,7 @@ export default {
   },
   mounted: function() {
     this.getAllBooks();
+    this.exportPDF();
   },
   methods: {
     getAllBooks() {
@@ -178,6 +187,18 @@ export default {
             this.getAllBooks();
           }
         });
+    },
+    exportPDF() {
+      var vm = this;
+      var columns = [
+        {title: "Id", dataKey: "id"},
+        {title: "Title", dataKey: "Title"},
+        {title: "Author", dataKey: "Author"},
+        {title: "Price", dataKey: "Price"}
+      ];
+      var doc = new jsPDF('p', 'pt');
+      doc.autoTable(columns, vm.books);
+      doc.save('books.pdf');
     },
     editBook() {
       var formData = this.toFormData(this.currentBook);
