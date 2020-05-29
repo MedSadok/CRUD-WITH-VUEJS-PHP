@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <header class="container-fluid">
+    <header class="container-fluid sticky-top bg-white">
         <div class="d-flex justify-content-between py-4">
           <router-link to="/">
             <img :src="require('./assets/books.jpg')" alt="" />
@@ -15,18 +15,21 @@
           </ul> 
         </div>
     </header>
-    <router-view></router-view>
+    <router-view />
+
   </div>
 </template>
 <script>
   import EditBook from "./Components/EditBook";
   import Books from "./Components/Books";
+
   export default {
     name: "App",
     
     components: {
       EditBook,
-      Books
+      Books,
+
     }
   }
 
@@ -42,6 +45,9 @@
 <style>
   header{
     box-shadow: 4px 8px 12px 0 rgba(0,0,0,0.3);
+  }
+  .sticky-top{
+    z-index: 99;
   }
   ul{
     margin: 1rem 0;

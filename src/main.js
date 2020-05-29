@@ -1,5 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
+import Footer from "./Components/Footer.vue";
 import VueRouter from "vue-router";
 import EditBook from './Components/EditBook';
 import Books from "./Components/Books";
@@ -43,3 +44,7 @@ new Vue({
     router,
     render: h => h(App)
 }).$mount("#app");
+
+new Vue({
+    render: h => h(Footer)
+}).$mount("#footer");

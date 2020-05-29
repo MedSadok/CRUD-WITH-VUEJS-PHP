@@ -42,8 +42,9 @@
 		$Title = $_POST['Title'];
 		$Author = $_POST['Author'];
 		$Price = $_POST['Price'];
+		$Cover = $_POST['Cover'];
 
-		$sql = $conn->query("INSERT INTO books (Title,Author,Price) VALUES('$Title','$Author','$Price')");
+		$sql = $conn->query("INSERT INTO books (Title,Author,Price,Cover) VALUES('$Title','$Author','$Price',$Cover)");
 
 		if($sql){
 			$result['message'] = "Book was added successfully!";

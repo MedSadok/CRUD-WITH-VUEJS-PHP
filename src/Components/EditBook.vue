@@ -1,6 +1,5 @@
 <template>
-  <div class="book-table">
-    <h1 class="text-light text-center bg-dark py-3">CRUD operations using VUE.JS</h1>
+  <div class="book-table mt-5">
     <div class="container-fluid">
       <div class="d-flex justify-content-between">
         <h2 class="text-info">Books</h2>
@@ -28,7 +27,7 @@
             <table class="table table-bordered table-striped d-table ">
               <thead>
                 <tr class="text-center text-light text-info bg-primary">
-                  <th class="d-table-cell">ID</th>
+                  <th class="d-table-cell">Cover</th>
                   <th>Title</th>
                   <th>Author</th>
                   <th>Price</th>
@@ -38,7 +37,9 @@
               </thead>
               <tbody>
                 <tr v-for="book in books" :key="book.id" class="text-center">
-                  <td> {{ book.id }} </td>
+                  <td> 
+                    <img :src="imgsrc">
+                  </td>
                   <td> {{ book.Title }} </td>
                   <td> {{ book.Author }} </td>
                   <td> {{ book.Price}} </td>
@@ -83,6 +84,7 @@
                 <span>Price :</span>
                 <input type="text" name="price" class="form-control mt-2" placeholder="price" v-model="newBook.Price">
               </div>
+              <ImageUploader />
               <button class="btn btn-info btn-block" @click.prevent="showAddModal=false; addBook();">ADD</button>
             </form>
           </div>
@@ -146,8 +148,12 @@
 <script>
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import ImageUploader from './ImageUploader';
 export default {
   name: "Homepage",
+  components: {
+    ImageUploader
+  },
   data: function() {
     return {
       successMsg: false,
@@ -155,14 +161,14 @@ export default {
       showAddModal: false,
       showEditModal: false,
       showDeleteModal: false,
+      imgsrc: 'https://via.placeholder.com/100',
       books: [],
-      newBook: { Title: "", Author: "", Price: "" },
+      newBook: { Title: "", Author: "", Price: "", Cover: "" },
       currentBook: {}
     }
   },
   mounted: function() {
     this.getAllBooks();
-    this.exportPDF();
   },
   methods: {
     getAllBooks() {
@@ -179,9 +185,12 @@ export default {
       var formData = this.toFormData(this.newBook);
       axios.post('http://localhost/VUEJS/src/Backend/api.php?action=create', formData)
         .then((res) => {
-          this.newBook = { Title: "", Author: "", Price: "" };
+          this.newBook = { Title: "", Author: "", Price: "", Cover:"" };
           if (res.data.error) {
             this.errorMsg = res.data.message;
+            setTimeout(function () {
+               this.errorMsg
+            }, 3000);
           } else {
             this.successMsg = res.data.message;
             this.getAllBooks();
@@ -192,6 +201,7 @@ export default {
       var vm = this;
       var columns = [
         {title: "Id", dataKey: "id"},
+        {title: "Cover", dataKey: "Cover"},
         {title: "Title", dataKey: "Title"},
         {title: "Author", dataKey: "Author"},
         {title: "Price", dataKey: "Price"}
@@ -251,7 +261,9 @@ export default {
     left: 0;
     right: 0;
     background-color: rgba(0,0,0,0.6);
+    z-index: 100;
   }
+
   td a{
     color: #000;
     text-decoration: none;
