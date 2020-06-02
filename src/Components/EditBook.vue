@@ -1,21 +1,16 @@
+/* eslint-disable new-cap */ /* eslint-disable comma-dangle */
 <template>
   <div class="book-table">
-    <h1 class="text-light text-center bg-dark py-3">CRUD operations using VUE.JS</h1>
     <div class="container-fluid">
+      <h1 class="text-light text-center bg-dark py-3">CRUD operations using VUE.JS</h1>
       <div class="d-flex justify-content-between">
         <h2 class="text-info">Books</h2>
-        <div class="d-flex">
-          <button class="btn btn-info mr-2" @click="showAddModal=true">
-            <i class="fas fa-user mr-2"></i>
-            <span>add book</span>
-          </button>
-          <button class="btn btn-success" @click="exportPDF">
-            <i class="fas fa-file-pdf mr-2"></i>
-            <span>Download book as PDF</span>
-          </button>
-        </div>
+        <button class="btn btn-info mr-2" @click="showAddModal = true">
+          <i class="fas fa-user mr-2"></i>
+          <span>add book</span>
+        </button>
       </div>
-      <hr class="bg-info">
+      <hr class="bg-info" />
       <div class="alert alert-success" v-if="successMsg">
         <span>{{ successMsg }}</span>
       </div>
@@ -38,17 +33,31 @@
               </thead>
               <tbody>
                 <tr v-for="book in books" :key="book.id" class="text-center">
-                  <td> {{ book.id }} </td>
-                  <td> {{ book.Title }} </td>
-                  <td> {{ book.Author }} </td>
-                  <td> {{ book.Price}} </td>
+                  <td>{{ book.id }}</td>
+                  <td>{{ book.Title }}</td>
+                  <td>{{ book.Author }}</td>
+                  <td>{{ book.Price }}</td>
                   <td>
-                    <a href="#" class="text-success" @click="showEditModal=true; selectBook(book);">
+                    <a
+                      href="#"
+                      class="text-success"
+                      @click="
+                        showEditModal = true;
+                        selectBook(book);
+                      "
+                    >
                       <i class="fas fa-edit"></i>
                     </a>
                   </td>
                   <td>
-                    <a href="#" class="text-danger" @click="showDeleteModal=true; selectBook(book);">
+                    <a
+                      href="#"
+                      class="text-danger"
+                      @click="
+                        showDeleteModal = true;
+                        selectBook(book);
+                      "
+                    >
                       <i class="fas fa-trash"></i>
                     </a>
                   </td>
@@ -65,7 +74,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Add new book</h5>
-            <button type="button" class="close" @click="showAddModal=false">
+            <button type="button" class="close" @click="showAddModal = false">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -73,17 +82,43 @@
             <form method="post" action="#">
               <div class="form-group">
                 <span>Title :</span>
-                <input type="text" name="title" class="form-control mt-2" placeholder="name" v-model="newBook.Title">
+                <input
+                  type="text"
+                  name="title"
+                  class="form-control mt-2"
+                  placeholder="name"
+                  v-model="newBook.Title"
+                />
               </div>
               <div class="form-group">
                 <span>Author :</span>
-                <input type="text" name="author" class="form-control mt-2" placeholder="author" v-model="newBook.Author">
+                <input
+                  type="text"
+                  name="author"
+                  class="form-control mt-2"
+                  placeholder="author"
+                  v-model="newBook.Author"
+                />
               </div>
               <div class="form-group">
                 <span>Price :</span>
-                <input type="text" name="price" class="form-control mt-2" placeholder="price" v-model="newBook.Price">
+                <input
+                  type="text"
+                  name="price"
+                  class="form-control mt-2"
+                  placeholder="price"
+                  v-model="newBook.Price"
+                />
               </div>
-              <button class="btn btn-info btn-block" @click.prevent="showAddModal=false; addBook();">ADD</button>
+              <button
+                class="btn btn-info btn-block"
+                @click.prevent="
+                  showAddModal = false;
+                  addBook();
+                "
+              >
+                ADD
+              </button>
             </form>
           </div>
         </div>
@@ -95,7 +130,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Edit book</h5>
-            <button type="button" class="close" @click="showEditModal=false">
+            <button type="button" class="close" @click="showEditModal = false">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -103,18 +138,41 @@
             <form method="post" action="#">
               <div class="form-group">
                 <span>Title :</span>
-                <input type="text" name="title" class="form-control mt-2" v-model="currentBook.Title">
+                <input
+                  type="text"
+                  name="title"
+                  class="form-control mt-2"
+                  v-model="currentBook.Title"
+                />
               </div>
               <div class="form-group">
                 <span>Author :</span>
-                <input type="text" name="author" class="form-control mt-2" v-model="currentBook.Author">
+                <input
+                  type="text"
+                  name="author"
+                  class="form-control mt-2"
+                  v-model="currentBook.Author"
+                />
               </div>
               <div class="form-group">
                 <span>Price :</span>
-                <input type="text" name="price" class="form-control mt-2" v-model="currentBook.Price">
+                <input
+                  type="text"
+                  name="price"
+                  class="form-control mt-2"
+                  v-model="currentBook.Price"
+                />
               </div>
               <div class="form-group">
-                <button class="btn btn-info btn-block" @click.prevent="showEditModal=false; editBook();">EDIT</button>
+                <button
+                  class="btn btn-info btn-block"
+                  @click.prevent="
+                    showEditModal = false;
+                    editBook();
+                  "
+                >
+                  EDIT
+                </button>
               </div>
             </form>
           </div>
@@ -127,16 +185,26 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Delete book</h5>
-            <button type="button" class="close" @click="showDeleteModal=false">
+            <button type="button" class="close" @click="showDeleteModal = false">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body p-4">
             <h4 class="text-danger">Are you sure you want to delete this book ?</h4>
             <h6>You are deleting {{ currentBook.name }}</h6>
-            <hr class="bg-info">
-            <button class="btn btn-info btn-block" @click="showDeleteModal=false; deleteBook()">DELETE</button>
-            <button class="btn btn-danger btn-block" @click="showDeleteModal=false">CANCEL</button>
+            <hr class="bg-info" />
+            <button
+              class="btn btn-info btn-block"
+              @click="
+                showDeleteModal = false;
+                deleteBook();
+              "
+            >
+              DELETE
+            </button>
+            <button class="btn btn-danger btn-block" @click="showDeleteModal = false">
+              CANCEL
+            </button>
           </div>
         </div>
       </div>
@@ -144,11 +212,10 @@
   </div>
 </template>
 <script>
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import axios from "axios";
 export default {
   name: "Homepage",
-  data: function() {
+  data() {
     return {
       successMsg: false,
       errorMsg: false,
@@ -158,77 +225,60 @@ export default {
       books: [],
       newBook: { Title: "", Author: "", Price: "" },
       currentBook: {}
-    }
+    };
   },
-  mounted: function() {
+  mounted() {
     this.getAllBooks();
-    this.exportPDF();
   },
   methods: {
     getAllBooks() {
-      axios.get('http://localhost/VUEJS/src/Backend/api.php?action=read')
-        .then((res) => {
-          if (res.data.error) {
-            this.errorMsg = res.data.message;
-          } else {
-            this.books = res.data.books;
-          }
-        });
+      axios.get("http://localhost/VUEJS/src/Backend/api.php?action=read").then(res => {
+        if (res.data.error) {
+          this.errorMsg = res.data.message;
+        } else {
+          this.books = res.data.books;
+        }
+      });
     },
     addBook() {
-      var formData = this.toFormData(this.newBook);
-      axios.post('http://localhost/VUEJS/src/Backend/api.php?action=create', formData)
-        .then((res) => {
-          this.newBook = { Title: "", Author: "", Price: "" };
-          if (res.data.error) {
-            this.errorMsg = res.data.message;
-          } else {
-            this.successMsg = res.data.message;
-            this.getAllBooks();
-          }
-        });
-    },
-    exportPDF() {
-      var vm = this;
-      var columns = [
-        {title: "Id", dataKey: "id"},
-        {title: "Title", dataKey: "Title"},
-        {title: "Author", dataKey: "Author"},
-        {title: "Price", dataKey: "Price"}
-      ];
-      var doc = new jsPDF('p', 'pt');
-      doc.autoTable(columns, vm.books);
-      doc.save('books.pdf');
+      const formData = this.toFormData(this.newBook);
+      axios.post("http://localhost/VUEJS/src/Backend/api.php?action=create", formData).then(res => {
+        this.newBook = { Title: "", Author: "", Price: "" };
+        if (res.data.error) {
+          this.errorMsg = res.data.message;
+        } else {
+          this.successMsg = res.data.message;
+          this.getAllBooks();
+        }
+      });
     },
     editBook() {
-      var formData = this.toFormData(this.currentBook);
-      axios.post('http://localhost/VUEJS/src/Backend/api.php?action=update', formData)
-        .then((res) => {
-          this.currentBook = {};
-          if (res.data.error) {
-            this.errorMsg = res.data.message;
-          } else {
-            this.successMsg = res.data.message;
-            this.getAllBooks();
-          }
-        });
+      const formData = this.toFormData(this.currentBook);
+      axios.post("http://localhost/VUEJS/src/Backend/api.php?action=update", formData).then(res => {
+        this.currentBook = {};
+        if (res.data.error) {
+          this.errorMsg = res.data.message;
+        } else {
+          this.successMsg = res.data.message;
+          this.getAllBooks();
+        }
+      });
     },
     deleteBook() {
-      var formData = this.toFormData(this.currentBook);
-      axios.post('http://localhost/VUEJS/src/Backend/api.php?action=delete', formData)
-        .then((res) => {
-          this.currentBook = {};
-          if (res.data.error) {
-            this.errorMsg = res.data.message;
-          } else {
-            this.successMsg = res.data.message;
-            this.getAllBooks();
-          }
-        });
+      const formData = this.toFormData(this.currentBook);
+      axios.post("http://localhost/VUEJS/src/Backend/api.php?action=delete", formData).then(res => {
+        this.currentBook = {};
+        if (res.data.error) {
+          this.errorMsg = res.data.message;
+        } else {
+          this.successMsg = res.data.message;
+          this.getAllBooks();
+        }
+      });
     },
     toFormData(obj) {
-      var fd = new FormData();
-      for (var i in obj) {
+      const fd = new FormData();
+      for (const i in obj) {
         fd.append(i, obj[i]);
       }
       return fd;
@@ -237,27 +287,24 @@ export default {
       this.currentBook = book;
     }
   }
-}
-
+};
 </script>
 
-
-
 <style scoped>
-  #overlay{
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0,0,0,0.6);
-  }
-  td a{
-    color: #000;
-    text-decoration: none;
-  }
-  td a:hover{
-    color: #dd0c29;
-    text-decoration: none;
-  }
+#overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+td a {
+  color: #000;
+  text-decoration: none;
+}
+td a:hover {
+  color: #dd0c29;
+  text-decoration: none;
+}
 </style>
